@@ -1,0 +1,56 @@
+version: "3.1"
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      # These ports are in format <host-port>:<container-port>
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    environment:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "exampleuser"
+      DB_MYSQL_PASSWORD: "examplepass"
+      DB_MYSQL_NAME: "exampledb"
+      # Uncomment this if IPv6 is not enabled on your host
+      # DISABLE_IPV6: 'true'
+    volumes:
+      - data:/data
+      - letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+
+  wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: exampleuser
+      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_NAME: exampledb
+    volumes:
+      - wordpress:/var/www/html
+
+  db:
+    image: 'jc21/mariadb-aria:latest'
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_DATABASE: exampledb
+      MYSQL_ROOT_PASSWORD: 'npm'
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  wordpress: /docker/wp
+  db: /docker/mysql
+  data: /docker/data
+  letsencrypt: /docker/letsencrypt

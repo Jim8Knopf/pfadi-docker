@@ -38,8 +38,24 @@ services:
     volumes:
       - wordpress:/var/www/html
 
+  nextcloud:
+    image: nextcloud
+    restart: always
+    ports:
+      - 8888:80
+    links:
+      - db
+    volumes:
+      - nextcloud:/var/www/html
+    environment:
+      MYSQL_HOST: db
+      MYSQL_USER: exampleuser
+      MYSQL_PASSWORD: examplepass
+      MYSQL_DATABASE: exampledb
+      
+
   db:
-    image: 'jc21/mariadb-aria:latest'
+    image: mariadb:10.5
     restart: unless-stopped
     environment:
       MYSQL_USER: exampleuser
@@ -50,7 +66,9 @@ services:
       - db:/var/lib/mysql
 
 volumes:
-  wordpress: /docker/wp
-  db: /docker/mysql
-  data: /docker/data
-  letsencrypt: /docker/letsencrypt
+  wordpress: 
+  db: 
+  data: 
+  letsencrypt: 
+  nextcloud:
+

@@ -29,8 +29,8 @@ services:
     restart: always
     environment:
       WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: exampleuser
-      WORDPRESS_DB_PASSWORD: examplepass
+      WORDPRESS_DB_USER: user
+      WORDPRESS_DB_PASSWORD: pass
       WORDPRESS_DB_NAME: exampledb
       WORDPRESS_DEBUG: "false"
     volumes:
@@ -54,8 +54,8 @@ services:
     image: mariadb:10.5
     restart: unless-stopped
     environment:
-      MYSQL_USER: exampleuser
-      MYSQL_PASSWORD: examplepass
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
       MYSQL_DATABASE: exampledb
       MYSQL_ROOT_PASSWORD: "npm"
     volumes:

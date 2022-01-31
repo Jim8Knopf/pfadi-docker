@@ -1,13 +1,13 @@
 version: "3.1"
 services:
   NginxProxyManager:
-    image: 'jc21/nginx-proxy-manager:latest'
+    image: "jc21/nginx-proxy-manager:latest"
     restart: unless-stopped
     ports:
       # These ports are in format <host-port>:<container-port>
-      - '80:80' # Public HTTP Port
-      - '443:443' # Public HTTPS Port
-      - '81:81' # Admin Web Port
+      - "80:80" # Public HTTP Port
+      - "443:443" # Public HTTPS Port
+      - "81:81" # Admin Web Port
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
     environment:
@@ -24,7 +24,6 @@ services:
     depends_on:
       - db
 
-
   wordpress:
     image: wordpress
     restart: always
@@ -33,7 +32,7 @@ services:
       WORDPRESS_DB_USER: exampleuser
       WORDPRESS_DB_PASSWORD: examplepass
       WORDPRESS_DB_NAME: exampledb
-      WORDPRESS_DEBUG: 'false'
+      WORDPRESS_DEBUG: "false"
     volumes:
       - wordpress:/var/www/html
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
@@ -50,7 +49,6 @@ services:
       MYSQL_USER: exampleuser
       MYSQL_PASSWORD: examplepass
       MYSQL_DATABASE: exampledb
-      
 
   db:
     image: mariadb:10.5
@@ -59,18 +57,18 @@ services:
       MYSQL_USER: exampleuser
       MYSQL_PASSWORD: examplepass
       MYSQL_DATABASE: exampledb
-      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_ROOT_PASSWORD: "npm"
     volumes:
       - db:/var/lib/mysql
 
 volumes:
-  wordpress: 
-  db: 
-  data: 
-  letsencrypt: 
+  wordpress:
+  db:
+  data:
+  letsencrypt:
   nextcloud:
 
 networks:
- default:
-  external:
-   name: proxy
+  default:
+    external:
+      name: proxy

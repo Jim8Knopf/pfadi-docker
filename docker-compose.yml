@@ -44,6 +44,7 @@ services:
       - db
     volumes:
       - nextcloud:/var/www/html
+      - wordpress:/var/www/html/data/website/files
     environment:
       MYSQL_HOST: db
       MYSQL_USER: exampleuser

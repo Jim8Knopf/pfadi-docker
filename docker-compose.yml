@@ -61,6 +61,32 @@ services:
       MYSQL_ROOT_PASSWORD: "npm"
     volumes:
       - db:/var/lib/mysql
+      
+      
+      
+  wordpress-g:
+    image: wordpress:latest
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db-g
+      WORDPRESS_DB_USER: exampleuser-g
+      WORDPRESS_DB_PASSWORD: examplepass-g
+      WORDPRESS_DB_NAME: exampledb-g
+      WORDPRESS_DEBUG: 0
+    volumes:
+      - wordpress-g:/var/www/html
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      
+  db-g:
+    image: mariadb:10.5
+    restart: unless-stopped
+    environment:
+      MYSQL_USER: exampleuser-g
+      MYSQL_PASSWORD: examplepass-g
+      MYSQL_DATABASE: exampledb-g
+      MYSQL_ROOT_PASSWORD: "npm"
+    volumes:
+      - db-g:/var/lib/mysql
 
 volumes:
   wordpress:

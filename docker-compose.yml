@@ -90,7 +90,9 @@ services:
 
 volumes:
   wordpress:
+  wordpress-g:
   db:
+  db-g:
   data:
   letsencrypt:
   nextcloud:
